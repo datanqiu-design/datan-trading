@@ -107,7 +107,7 @@ function render(){const d=D,sy=d.systems||[],P=sy.flatMap(s=>(s.pos||[]).map(p=>
  chart();
  // board
  const S=[...sy].sort((a,b)=>((b.eq??0)-(a.eq??0)));
- $("lb").innerHTML=S.map(s=>{const pl=ok(s.eq)?s.eq-1000:null,dd=/淘汰/.test(s.status||""),ps=(s.pos||[]).length;
+ $("lb").innerHTML=S.map(s=>{const pl=ok(s.eq)?s.eq-(s.capital??1000):null,dd=/淘汰/.test(s.status||""),ps=(s.pos||[]).length;
   return`<div class="lr"${dd?' style="opacity:.5"':""}><b><span class="sw" style="background:${C[s.sys]||"#888"}"></span>${esc(nm(s))}<span class="tg">${dd?"已停下":ps?"拿着单子":"等机会"}</span></b>
   <span class="v num ${cls(pl)}">${!ok(pl)?"—":Math.abs(pl)<.005?"没赚没亏":(pl>0?"赚 ":"亏 ")+u(pl)+" U"}</span><p>${esc(how(s))}</p></div>`}).join("")||'<div class="lr"><p>暂时没有策略数据</p></div>';
  details()}
