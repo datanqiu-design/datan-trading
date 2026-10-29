@@ -1,223 +1,151 @@
 <!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>大潭的交易系统 · OKX 模拟盘</title><meta name="theme-color" content="#0a0e16">
 <style>
-:root{--bg:#0a0e16;--card:#111725;--line:#1f2940;--tx:#e9edf5;--mu:#97a1b5;--dim:#68728a;--gold:#d8b46a;--up:#2fd39a;--dn:#ff5d6c;--warn:#f2c14e;--blue:#7aa7ff}
+:root{--bg:#0a0e16;--card:#10162399;--line:#1f2940;--tx:#eef1f7;--mu:#9aa4b8;--dim:#6b7590;--gold:#d8b46a;--up:#34d69f;--dn:#ff6474}
 *{box-sizing:border-box;margin:0;padding:0}html{-webkit-text-size-adjust:100%}
-body{background:radial-gradient(1100px 480px at 50% -160px,#1a2340 0%,transparent 70%),var(--bg);color:var(--tx);font:15px/1.5 -apple-system,"SF Pro Text","PingFang SC","Noto Sans SC",sans-serif;min-height:100vh;padding-bottom:30px}
-.num{font-family:"SF Mono","JetBrains Mono",ui-monospace,Menlo,monospace;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
-.up{color:var(--up)}.dn{color:var(--dn)}.mu{color:var(--mu)}.dim{color:var(--dim)}
-.wrap{max-width:1180px;margin:0 auto;padding:0 16px}
-.flash{animation:fl 1s}@keyframes fl{0%{background:#d8b46a33}100%{background:transparent}}
-/* A */
-.bar-a{position:sticky;top:0;z-index:20;background:#0a0e16e6;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-.bar-a .wrap{min-height:52px;padding-top:6px;padding-bottom:6px;display:flex;align-items:center;justify-content:space-between;gap:8px}
-.brand{display:flex;align-items:center;gap:8px;min-width:0}
-.mark{width:16px;height:16px;border:1px solid var(--gold);transform:rotate(45deg);flex:none;display:grid;place-items:center}.mark i{width:5px;height:5px;background:var(--gold)}
-.brand b{font-weight:600;font-size:15px;letter-spacing:.06em;white-space:nowrap}
-.warnl{font-size:11.5px;color:#ffc04d;font-weight:600;white-space:nowrap}.sim{font-size:11px;background:#2a3245;color:#c3cad8;padding:1px 7px;border-radius:5px;white-space:nowrap}
-.live{font-size:11.5px;color:var(--mu);display:flex;align-items:center;gap:6px;white-space:nowrap}
-.dot{width:7px;height:7px;border-radius:50%;background:var(--up);box-shadow:0 0 0 3px #2fd39a22}
-.dot.y{background:var(--warn);box-shadow:0 0 0 3px #f2c14e22}.dot.r{background:var(--dn);box-shadow:0 0 0 3px #ff5d6c22}
-/* B */
-.hero{padding:22px 0 4px}
-.eyebrow{font-size:12px;letter-spacing:.2em;color:var(--gold)}
-.big{font-size:44px;font-weight:300;line-height:1.1;margin:6px 0 4px}.big small{font-size:16px;color:var(--mu);margin-left:4px}
-.retl{font-size:20px;font-weight:600;display:flex;gap:14px;flex-wrap:wrap}
-.meta{font-size:12px;color:var(--mu);margin-top:6px}
-.prog{margin-top:14px}.prog .tr{height:4px;background:#1c2438;border-radius:4px;overflow:hidden}.prog .fl{height:100%;background:linear-gradient(90deg,#8d6f33,var(--gold));border-radius:4px}
-.prog .lb{display:flex;justify-content:space-between;font-size:11.5px;color:var(--mu);margin-top:6px}
-/* C */
-.card{background:linear-gradient(180deg,var(--card),#0e1320);border:1px solid var(--line);border-radius:16px}
-.chartc{padding:12px 12px 6px;margin-top:16px;position:relative}
-.chartc .hd{display:flex;justify-content:space-between;font-size:12px;color:var(--mu);margin-bottom:4px}
-.tip{position:absolute;pointer-events:none;background:#1b2337;border:1px solid #2c3858;border-radius:8px;padding:4px 8px;font-size:11.5px;display:none;white-space:nowrap}
+body{background:radial-gradient(900px 520px at 85% -120px,#1d2848 0%,transparent 65%),radial-gradient(700px 400px at -10% 30%,#15203a55 0%,transparent 70%),var(--bg);color:var(--tx);font:16px/1.6 -apple-system,"PingFang SC","Noto Sans SC","Helvetica Neue",sans-serif;min-height:100vh}
+.num{font-variant-numeric:tabular-nums}
+.up{color:var(--up)}.dn{color:var(--dn)}.mu{color:var(--mu)}
+.wrap{max-width:720px;margin:0 auto;padding:0 20px 40px}
+header{padding:22px 0 8px;display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+header h1{font-size:19px;font-weight:600;letter-spacing:.12em}
+.warn{font-size:12.5px;color:#ffc04d;font-weight:600;margin-top:2px;letter-spacing:.02em}
+.live{font-size:12px;color:var(--mu);display:flex;align-items:center;gap:6px;white-space:nowrap;margin-top:4px}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--up);box-shadow:0 0 0 3px #34d69f22}.dot.y{background:#f2c14e;box-shadow:0 0 0 3px #f2c14e22}.dot.r{background:var(--dn)}
+.rule{height:1px;background:linear-gradient(90deg,var(--gold),transparent);opacity:.5;margin:10px 0 6px}
+.blk{padding:26px 0 24px;border-bottom:1px solid var(--line)}
+.lab{font-size:13px;letter-spacing:.3em;color:var(--gold);margin-bottom:10px}
+.lab i{font-style:normal;font-family:Georgia,"Songti SC",serif;letter-spacing:0;margin-right:8px;opacity:.8}
+.s1{font-size:34px;font-weight:600;line-height:1.3;letter-spacing:.01em}
+.s1 small{display:block;font-size:15px;font-weight:400;color:var(--mu);margin-top:8px}
+.s2{font-size:24px;font-weight:500;line-height:1.45}
+.s3{font-size:24px;font-weight:500}.s3 em{font-style:normal;color:var(--gold)}
+.prog{margin-top:16px}.prog .tr{height:5px;background:#1c2438;border-radius:5px;overflow:hidden}.prog .fl{height:100%;background:linear-gradient(90deg,#8d6f33,var(--gold));border-radius:5px}
+.prog .pl{display:flex;justify-content:space-between;font-size:14px;color:var(--mu);margin-top:8px}
+h2{font-size:14px;letter-spacing:.3em;color:var(--mu);font-weight:500;margin:34px 0 14px}
+.chart{background:linear-gradient(180deg,#111827,#0d121d);border:1px solid var(--line);border-radius:20px;padding:16px 14px 8px}
+.chart .hd{font-size:13px;color:var(--mu);display:flex;justify-content:space-between;margin-bottom:6px}
+.hint{height:150px;display:grid;place-items:center;text-align:center;color:var(--mu);font-size:15px;padding:0 10px}
 svg{display:block;width:100%}
-/* D */
-.risk{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:12px}
-.risk>div{padding:10px 10px 11px}
-.risk label{font-size:11.5px;color:var(--mu);display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.risk .v{font-size:19px;font-weight:600;display:block;margin-top:2px}
-.risk small{font-size:11px;color:var(--dim);display:block}
-.mbar{height:5px;background:#1c2438;border-radius:5px;margin-top:6px;position:relative;overflow:visible}
-.mbar .fl{height:100%;border-radius:5px}.mbar .mk{position:absolute;top:-3px;width:2px;height:11px;background:#e9edf5;border-radius:1px}
-/* term */
-.t{border-bottom:1px dotted #6b7690;cursor:pointer}.t:after{content:"ⓘ";font-size:.72em;color:var(--gold);margin-left:2px;vertical-align:.25em}
-#pop{visibility:hidden;position:fixed;left:12px;right:12px;bottom:16px;max-width:480px;margin:0 auto;background:#182036;border:1px solid #33406a;border-radius:16px;padding:14px 16px;z-index:50;box-shadow:0 18px 50px #000a;transform:translateY(140%);transition:transform .25s}
-#pop.on{transform:none;visibility:visible}#pop b{color:var(--gold);font-size:15px}#pop p{font-size:14px;margin-top:4px;color:#d6dbe6}#pop i{float:right;font-style:normal;color:var(--dim);cursor:pointer;padding:0 4px}
-/* sections */
-h2{font-size:13px;letter-spacing:.18em;color:var(--mu);font-weight:500;margin:30px 0 12px;display:flex;align-items:center;gap:10px}
-h2:before{content:"";width:14px;height:1px;background:var(--gold)}h2 em{font-style:normal;color:var(--dim);letter-spacing:0;margin-left:auto;font-size:12px}
-.sc{padding:14px;margin-bottom:10px}
-.sc.dead{opacity:.5;filter:grayscale(.8)}.sc.dead .nmline b{text-decoration:line-through}
-.nmline{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.nmline b{font-size:15px}.nmline span{font-size:13px;color:var(--mu)}
-.badge{font-size:11px;padding:1px 8px;border-radius:20px;border:1px solid var(--line);color:var(--mu)}
-.badge.on{color:var(--blue);border-color:#7aa7ff66}.badge.p{color:var(--warn);border-color:#f2c14e66}.badge.x{color:var(--dn);border-color:#ff5d6c66}
-.row2{display:grid;grid-template-columns:1fr 64px;align-items:center;gap:10px;margin-top:6px}
-.row2 .r{font-size:22px;font-weight:600}.row2 small{font-size:12px;color:var(--mu);margin-left:8px}
-.row3{display:grid;grid-template-columns:minmax(0,1.3fr) 1fr 1fr;gap:10px;margin-top:10px;font-size:12px;color:var(--mu)}
-.row3 b{color:var(--tx);font-weight:500}
-.doing{font-size:12.5px;color:var(--dim);margin-top:8px;border-top:1px dashed var(--line);padding-top:8px}
-.sc summary{list-style:none;font-size:12px;color:var(--gold);cursor:pointer;margin-top:8px}.sc summary::-webkit-details-marker{display:none}
-.sub{font-size:12.5px;color:var(--mu);margin-top:8px;display:grid;gap:4px}
-.pos{display:grid;gap:12px}
-.pc{padding:14px}.pc .top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
-.pc .top b{font-size:17px}.side{font-size:11.5px;padding:2px 8px;border-radius:6px;margin-left:6px}
-.side.L{background:#2fd39a1c;color:var(--up)}.side.S{background:#ff5d6c1c;color:var(--dn)}
-.lev{font-size:11px;color:var(--mu);border:1px solid var(--line);border-radius:5px;padding:0 5px;margin-left:4px}.lev.hi{color:var(--warn);border-color:#f2c14e66}
-.pc .u{font-size:21px;font-weight:600}
-.pc .g{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}.pc .g label{font-size:11.5px;color:var(--mu);display:block}.pc .g .num{font-size:14px}
-.sl .tr{height:6px;border-radius:6px;background:#1c2438;overflow:hidden;margin-top:12px}.sl .fl{height:100%;border-radius:6px}
-.sl .lb{display:flex;justify-content:space-between;font-size:12px;color:var(--mu);margin-top:6px}
-.wait{border:1px dashed #2a3552;border-radius:16px;padding:22px 16px;text-align:center;background:linear-gradient(135deg,#131a2b,#0f1420)}
-.pulse{width:42px;height:42px;margin:0 auto 10px;border-radius:50%;border:1px solid var(--gold);position:relative}
-.pulse:after{content:"";position:absolute;inset:-1px;border-radius:50%;border:1px solid var(--gold);animation:p 2.4s ease-out infinite}.pulse i{position:absolute;inset:15px;border-radius:50%;background:var(--gold)}
-@keyframes p{to{transform:scale(1.9);opacity:0}}
-.wait h3{font-size:16px;font-weight:500}.wait p{font-size:13px;color:var(--mu);margin-top:4px}
-.cdc{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;margin-bottom:10px}
-.cdc .num{font-size:24px;color:var(--gold)}.cdc p{font-size:12px;color:var(--mu)}
-.feed{padding:2px 14px}.fi{display:grid;grid-template-columns:44px 1fr;gap:10px;padding:10px 0;border-top:1px solid var(--line);font-size:13.5px}
-.fi:first-child{border-top:0}.fi small{color:var(--dim);font-size:11.5px;line-height:1.9}
-.more{display:block;width:100%;background:none;border:0;border-top:1px solid var(--line);color:var(--gold);padding:10px;font-size:13px;cursor:pointer}
-.sum{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-bottom:10px}
-.sum div{background:var(--card);padding:10px}.sum label{font-size:11px;color:var(--mu);display:block;white-space:nowrap}.sum .num{font-size:15px;font-weight:600}
-.tc{padding:11px 14px;margin-bottom:8px;display:grid;grid-template-columns:1fr auto;gap:3px 10px}
-.tc .pn{font-size:16px;font-weight:600;text-align:right}.tc .mu{font-size:12px}
-.rt{font-size:11px;padding:1px 6px;border-radius:5px;background:#ffffff0d;text-align:right;justify-self:end}
-.strip{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}.strip::-webkit-scrollbar{display:none}
-.chip{flex:none;padding:10px 14px;font-size:13px}.chip b{display:block;font-size:11.5px;color:var(--mu);font-weight:500}
-.pool{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;font-size:12px;color:var(--mu);align-items:center}.pool span{border:1px solid var(--line);border-radius:20px;padding:1px 8px}
-details.dl{margin-bottom:8px}details.dl summary{padding:11px 14px;cursor:pointer;color:var(--mu);font-size:13.5px}
-pre{white-space:pre-wrap;font:12px/1.6 ui-monospace,Menlo,monospace;padding:0 14px 12px;color:#c6cddb}
-.empty{color:var(--dim);font-size:13px;text-align:center;padding:18px}
-footer{text-align:center;color:var(--dim);font-size:12px;margin-top:34px;line-height:1.9}footer a{color:var(--gold);cursor:pointer}
-#gl{display:none;margin-top:12px;text-align:left;padding:6px 14px}#gl.on{display:block}#gl div{font-size:12.5px;padding:6px 0;border-top:1px solid var(--line);color:var(--mu)}#gl div:first-child{border:0}#gl b{color:var(--tx);font-weight:500}
-@media(min-width:900px){.big{font-size:60px}.top{display:grid;grid-template-columns:400px 1fr;gap:28px;align-items:start}.top .chartc{margin-top:22px}
- .lbg{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:12px}.lbg .sc{margin:0}.pos{grid-template-columns:1fr 1fr}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:28px}}
-</style></head><body>
-<div class="bar-a"><div class="wrap"><div class="brand"><div class="mark"><i></i></div><div style="min-width:0"><b>大潭的交易系统</b><div class="warnl">⚠️ <span class="t" data-k="模拟盘">OKX 模拟盘</span> · 非真实资金</div></div></div>
-<div class="live"><span class="dot y" id="dot"></span><span id="upd">连接中…</span></div></div></div>
-<div class="wrap">
-<section class="top"><div>
- <div class="hero"><div class="eyebrow"><span class="t" data-k="权益">现在总共有多少钱</span></div>
- <div class="big num" id="tot">—</div>
- <div class="retl num" id="ret">—</div>
- <div class="meta" id="today"></div><div class="meta"><span class="t" data-k="本金">起步资金</span> <span class="num" id="cap">—</span> U · 测试期 <span id="per">—</span></div>
- <div class="prog"><div class="tr"><div class="fl" id="pfl" style="width:0"></div></div><div class="lb"><span id="pday">第 — 天 / 共 8 天</span><span id="pend"></span></div></div></div>
-</div><div>
- <div class="card chartc"><div class="hd"><span>总资金走势 · U</span><span id="crng"></span></div><div id="ch"></div><div class="tip num" id="ctip"></div></div>
- <div class="risk">
-  <div class="card"><label><span class="t" data-k="最大回撤">最惨时掉了</span></label><span class="v num" id="rdd">—</span><div class="mbar" id="rddb"></div><small><span class="t" data-k="淘汰线">亏到 <span id="rlim">—</span>% 下场</span></small></div>
-  <div class="card"><label>还在场的系统</label><span class="v num" id="ralive">—</span><small id="ralive2">共 5 套</small></div>
-  <div class="card"><label><span class="t" data-k="持仓">手上的单子</span></label><span class="v num" id="rpos">—</span><small id="rupnl"><span class="t" data-k="浮盈亏">暂时赚亏</span> —</small></div>
- </div></div></section>
-
-<h2>五套系统排行<em>按赚了百分之几</em></h2><div class="lbg" id="sys"></div>
-<h2><span class="t" data-k="持仓">手上的单子</span><em id="posn"></em></h2><div id="pos"></div>
-<div class="grid2"><div>
- <h2>程序在干嘛</h2>
- <div class="card cdc"><div><p>下次看盘倒计时</p><p class="dim">程序每 4 小时看一次 <span class="t" data-k="K线">K 线</span></p></div><span class="num" id="cd">--:--:--</span></div>
- <div class="card feed" id="feed"></div>
-</div><div>
- <h2>已经卖掉的单子<em id="trn"></em></h2><div class="sum" id="tsum"></div><div id="tr"></div>
-</div></div>
-<h2>行情<em>今天涨跌</em></h2><div class="strip" id="tick"></div><div class="pool" id="pool"></div>
-<h2>每日小结</h2><div id="daily"></div>
-<footer>OKX 模拟盘，不是真钱，不构成投资建议<br>数据来源：OKX 行情 + 本系统交易记录 · 每 5 秒刷新<br><a id="glb">术语小词典 ▾</a><div class="card" id="gl"></div></footer>
+.lb{border-top:1px solid var(--line)}
+.lr{display:grid;grid-template-columns:1fr auto;gap:2px 14px;padding:16px 2px;border-bottom:1px solid var(--line)}
+.lr b{font-size:17px;font-weight:600}.lr .v{font-size:19px;font-weight:600;text-align:right;align-self:center}
+.lr p{grid-column:1/-1;font-size:14px;color:var(--mu)}
+.lr .tg{font-size:12px;color:var(--dim);margin-left:6px;font-weight:400}
+.sw{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:8px;transform:rotate(45deg);vertical-align:2px}
+details.more{margin-top:30px;border:1px solid var(--line);border-radius:18px;background:#0e131e}
+details.more>summary{list-style:none;padding:16px 18px;cursor:pointer;color:var(--gold);font-size:16px;text-align:center;letter-spacing:.1em}
+details.more>summary::-webkit-details-marker{display:none}
+details.more[open]>summary{border-bottom:1px solid var(--line)}
+.dt{padding:6px 18px 18px}
+.dt h3{font-size:14px;color:var(--gold);font-weight:500;margin:18px 0 8px;letter-spacing:.1em}
+.kv{display:grid;grid-template-columns:1fr auto;gap:6px 12px;font-size:14.5px}.kv span:nth-child(odd){color:var(--mu)}.kv span:nth-child(even){text-align:right}
+.note{font-size:12.5px;color:var(--dim);margin-top:6px}
+.tk{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px;font-size:14px}.tk div{background:#141b2b;border-radius:10px;padding:8px 10px}
+.tr1{font-size:14px;padding:8px 0;border-top:1px solid var(--line)}
+.feed div{font-size:14px;padding:7px 0;border-top:1px solid var(--line)}.feed small{color:var(--dim);margin-right:8px}
+.daily{overflow-x:auto;font-size:13px}.daily table{border-collapse:collapse;min-width:100%}.daily td,.daily th{border-bottom:1px solid var(--line);padding:5px 6px;white-space:nowrap;text-align:left}.daily p{margin:6px 0;color:var(--mu)}
+footer{text-align:center;color:var(--dim);font-size:12.5px;margin-top:30px;line-height:1.9}
+@media(min-width:760px){.s1{font-size:44px}.s2,.s3{font-size:28px}}
+</style></head><body><div class="wrap">
+<header><div><h1>大潭的交易系统</h1><div class="warn">⚠️ OKX 模拟盘 · 非真实资金</div></div><div class="live"><span class="dot y" id="dot"></span><span id="upd">连接中…</span></div></header>
+<div class="rule"></div>
+<section class="blk"><div class="lab"><i>Ⅰ</i>结果</div><div class="s1 num" id="r1">正在读取数据…</div></section>
+<section class="blk"><div class="lab"><i>Ⅱ</i>现在在干嘛</div><div class="s2" id="r2">—</div></section>
+<section class="blk"><div class="lab"><i>Ⅲ</i>接下来</div><div class="s3 num" id="r3">—</div>
+ <div class="prog"><div class="tr"><div class="fl" id="pfl" style="width:0"></div></div><div class="pl"><span id="pday">第 — 天 / 共 — 天</span><span id="pend"></span></div></div></section>
+<h2>资金走势</h2><div class="chart"><div class="hd"><span>总资金（U）</span><span id="cr"></span></div><div id="ch"></div></div>
+<h2>五套策略谁赚谁亏</h2><div class="lb" id="lb"></div>
+<details class="more"><summary>展开看详情 ▾</summary><div class="dt" id="dt"></div></details>
+<footer>OKX 模拟盘，用的是假钱，不构成投资建议<br>数据每 5 秒自动刷新</footer>
 </div>
-<div id="pop"><i id="popx">✕</i><b id="popt"></b><p id="popd"></p></div>
 <script>
-const G={"权益":["现在总共有多少钱","本金 + 已赚已亏 + 手上持仓的浮动盈亏"],"余额":["落袋的钱","只算已经平掉的单子"],"本金":["起步资金","每套 1000U，共 5000U"],"收益率":["赚了百分之几","相对本金涨跌多少"],"盈亏":["赚/亏了多少 U","这段时间一共赚或亏的金额"],"浮盈亏":["还没卖，暂时赚/亏","现在平掉能拿到的，价格一动就变"],"已实现":["已经落袋的赚亏","已经平掉的单子算出来的赚亏"],"回撤":["从最高点掉下来多少","比如从 1100 掉到 1045 就是回撤 5%"],"最大回撤":["最惨的时候掉了多少","测试期内从高点到低点最大的跌幅"],"淘汰线":["亏到 10% 就下场","触发后这套系统不再开新单"],"当日暂停":["今天亏够了，先歇着","当天亏损到上限，明天再来"],"止损":["认亏线","价格到这里自动卖掉，防止亏更多"],"移动止损":["把认亏线往上挪","赚钱后上调，锁住一部分利润"],"胜率":["十次赢几次","赚钱的单子 ÷ 全部平掉的单子"],"盈亏比":["赢一次赚的 vs 输一次亏的","平均每笔赚 ÷ 平均每笔亏；大于 1 说明赚多亏少"],"盈利因子":["总赚 ÷ 总亏","大于 1 才算整体赚钱"],"R":["赚了几倍风险","1R = 这笔单子设定的最大可亏金额"],"做多":["买涨","价格涨就赚"],"做空":["买跌","价格跌就赚"],"平仓":["卖掉离场","结束这一笔，盈亏落袋"],"持仓":["手上的单子","程序现在拿着、还没卖掉的单子"],"空仓":["手上没单子，等机会","不是坏事"],"杠杆":["放大倍数","3 倍杠杆：涨跌 1%，盈亏约 3%"],"模拟盘":["假钱练习账户","OKX 提供，规则和真盘一样"],"信号":["程序觉得该出手了","满足规则条件的提示"],"K线":["每 4 小时一根价格蜡烛","程序每 4 小时收盘时检查一次"],"币池":["候选币名单","S5 从这里挑最近涨得最猛的币"],"风控":["安全规则","防止亏太多、下太大"]};
-const $=id=>document.getElementById(id);let tot0,D=null,lastOk=0,more=false,prevTxt={};
-const C={S1:"#d8b46a",S2:"#7aa7ff",S3:"#2fd39a",S4:"#c792ea",S5:"#ff8f6b"};
+const $=id=>document.getElementById(id);let D=null,lastOk=0,src=null;
+const C={S1:"#d8b46a",S2:"#7aa7ff",S3:"#34d69f",S4:"#c792ea",S5:"#ff8f6b"};
 const ok=v=>v!=null&&v!==""&&!isNaN(v);
 const f=(v,d=2)=>ok(v)?(+v).toLocaleString("en-US",{minimumFractionDigits:d,maximumFractionDigits:d}):"—";
 const sg=(v,d=2)=>ok(v)?(v>0?"+":v<0?"−":"")+f(Math.abs(v),d):"—";
-const ar=v=>ok(v)?(v>0?"▲ ":v<0?"▼ ":""):"";
-const cls=v=>!ok(v)?"mu":v>0?"up":v<0?"dn":"mu";
-const px=v=>ok(v)?(+v).toLocaleString("en-US",{maximumFractionDigits:v<1?5:v<100?3:2}):"—";
+const u=v=>ok(v)?(Math.abs(v)>=10?Math.round(Math.abs(v)):+Math.abs(v).toFixed(2)):"—";
+const cls=v=>ok(v)&&v>0?"up":ok(v)&&v<0?"dn":"";
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-const L=s=>s==="long"||s==="多";const cn=s=>String(s||"").replace("-USDT-SWAP","").replace("-USDT","");
-const T=(k,txt)=>`<span class="t" data-k="${k}">${txt||G[k][0]}</span>`;
-const _=0,ddc=v=>!ok(v)?"#2a3552":v<5?"var(--up)":v<8?"var(--warn)":"var(--dn)";
-const day=s=>s?new Date(String(s).slice(0,10)+"T00:00:00+08:00"):null;
-function set(id,html){const e=$(id);if(e.innerHTML!==html){const flash=prevTxt[id]!==undefined;e.innerHTML=html;prevTxt[id]=html;if(flash&&e.classList.contains("num")){e.classList.remove("flash");void e.offsetWidth;e.classList.add("flash")}}}
-function ddbar(now,max,lim=10){return`<div class="fl" style="width:${ok(now)?Math.min(100,now/lim*100):0}%;background:${ddc(now)}"></div>${ok(max)?`<div class="mk" style="left:calc(${Math.min(100,max/lim*100)}% - 1px)"></div>`:""}`}
-function spark(v){if(v.length<2)return'<svg viewBox="0 0 64 24" height="24"><line x1="0" y1="12" x2="64" y2="12" stroke="#2a3552" stroke-dasharray="2 3"/></svg>';const mn=Math.min(...v),mx=Math.max(...v),r=mx-mn||1,col=v.at(-1)>1000?"#2fd39a":v.at(-1)<1000?"#ff5d6c":"#97a1b5";return`<svg viewBox="0 0 64 24" height="24" preserveAspectRatio="none"><polyline fill="none" stroke="${col}" stroke-width="1.5" vector-effect="non-scaling-stroke" points="${v.map((y,i)=>(i/(v.length-1)*64).toFixed(1)+","+(2+20*(1-(y-mn)/r)).toFixed(1)).join(" ")}"/></svg>`}
-function chart(){const tc=(D.total_curve_ts||[]).map(x=>[hm(x[0]),x[1]]),cap=D.capital??5000,el=$("ch");
- if(tc.length<2){const bc=D.btc_curve||[];el.innerHTML='<div class="empty" style="height:140px;display:grid;place-items:center">每小时记一次，第 2 个点出来后开始画曲线</div>';$("crng").textContent="";return}
- const W=600,H=150,v=tc.map(x=>x[1]),all=[...v,cap],mn=Math.min(...all),mx=Math.max(...all),r=mx-mn||1,y=q=>8+(H-26)*(1-(q-mn)/r),yb=y(cap);
- const pts=v.map((q,i)=>[(i/(v.length-1))*W,y(q)]),line=pts.map(p=>p[0].toFixed(1)+","+p[1].toFixed(1)).join(" ");
- el.innerHTML=`<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" height="150" id="csvg"><defs><clipPath id="ca"><rect x="0" y="0" width="${W}" height="${yb}"/></clipPath><clipPath id="cb"><rect x="0" y="${yb}" width="${W}" height="${H}"/></clipPath></defs>
- <polygon clip-path="url(#ca)" fill="#2fd39a" fill-opacity=".16" points="0,${yb} ${line} ${W},${yb}"/><polygon clip-path="url(#cb)" fill="#ff5d6c" fill-opacity=".16" points="0,${yb} ${line} ${W},${yb}"/>
- <line x1="0" x2="${W}" y1="${yb}" y2="${yb}" stroke="#d8b46a" stroke-opacity=".55" stroke-dasharray="3 5" vector-effect="non-scaling-stroke"/>
- <polyline clip-path="url(#ca)" fill="none" stroke="#2fd39a" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linejoin="round" points="${line}"/><polyline clip-path="url(#cb)" fill="none" stroke="#ff5d6c" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linejoin="round" points="${line}"/>
- <line id="cx" x1="0" x2="0" y1="0" y2="${H-18}" stroke="#ffffff40" vector-effect="non-scaling-stroke" style="display:none"/>
- <text x="2" y="${H-3}" fill="#68728a" font-size="11">${esc(tc[0][0])}</text><text x="${W-2}" y="${H-3}" fill="#68728a" font-size="11" text-anchor="end">${esc(tc.at(-1)[0])}</text></svg>`;
- const bc=D.btc_curve||[];$("crng").innerHTML=`<span style="color:#d8b46a">┄</span> 起步 ${f(cap,0)}${bc.length?` · 同期拿着 BTC <b class="${cls(bc.at(-1)[1])}">${sg(bc.at(-1)[1])}%</b>`:""}`;
- const s=$("csvg"),tip=$("ctip"),cx=$("cx");const mv=e=>{const b=s.getBoundingClientRect(),x=((e.touches?e.touches[0].clientX:e.clientX)-b.left)/b.width,i=Math.max(0,Math.min(v.length-1,Math.round(x*(v.length-1))));cx.setAttribute("x1",pts[i][0]);cx.setAttribute("x2",pts[i][0]);cx.style.display="";tip.style.display="block";tip.innerHTML=`${esc(tc[i][0])} · <b class="${cls(v[i]-cap)}">${f(v[i])}</b>`;tip.style.left=Math.min(b.width-tip.offsetWidth+12,Math.max(12,x*b.width-tip.offsetWidth/2+12))+"px";tip.style.top="30px"};
- s.addEventListener("pointermove",mv);s.addEventListener("touchstart",mv,{passive:true});s.addEventListener("pointerleave",()=>{tip.style.display="none";cx.style.display="none"})}
-function stopBar(p){const e=+p.entry,s=p.sl,c=p.px;if(!ok(c)||!ok(e))return"";if(!ok(s))return`<div class="sl"><div class="lb"><span>${T("止损")}</span><span>—</span></div></div>`;
- const lg=L(p.side),dist=lg?(c-s)/c:(s-c)/c,init=Math.abs(e-(ok(p.sl_init)?p.sl_init:s))||1,room=lg?c-s:s-c,pct=Math.max(2,Math.min(100,room/init*50)),col=dist<.01?"var(--dn)":dist<.03?"var(--warn)":"var(--up)";
- return`<div class="sl"><div class="tr"><div class="fl" style="width:${pct}%;background:${col}"></div></div><div class="lb"><span>离${T("止损")}还有 <b class="num" style="color:${col}">${(dist*100).toFixed(2)}%</b></span><span>${(lg?s>=e:s<=e)?T("移动止损","认亏线已挪过进场价，锁住利润"):""}</span></div></div>`}
-function stats(tr){const w=tr.filter(t=>t.pnl>0),l=tr.filter(t=>t.pnl<0);const aw=w.length?w.reduce((a,t)=>a+t.pnl,0)/w.length:null,al=l.length?-l.reduce((a,t)=>a+t.pnl,0)/l.length:null;
- return{n:tr.length,win:tr.length?w.length/tr.length*100:null,pay:aw!=null&&al?aw/al:null,best:tr.length?Math.max(...tr.map(t=>+t.pnl||0)):null,worst:tr.length?Math.min(...tr.map(t=>+t.pnl||0)):null}}
-function bt(b){return b?`赚了 <b class="num ${cls(b.ret_pct)}">${sg(b.ret_pct)}%</b> · 最惨掉了 <b class="num">${f(b.mdd,1)}%</b> · ${T("胜率")} <b class="num">${f(b.win,0)}%</b> · <b class="num">${b.trades??"—"}</b> 笔${ok(b.pf)?` · ${T("盈利因子")} <b class="num">${f(b.pf)}</b>`:""}`:"—"}
-const hm=ts=>ts?new Date(ts).toLocaleString("zh-CN",{timeZone:"Asia/Shanghai",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",hour12:false}).replace(/\//g,"-"):"—";
-function badge(s){const st=String(s.status||"");const k=/淘汰/.test(st)?"x":/暂停/.test(st)?"p":(/持仓/.test(st)||(s.pos||[]).length)?"on":"";
- const txt=/淘汰/.test(st)?T("淘汰线","已下场"):/暂停/.test(st)?T("当日暂停"):(/持仓/.test(st)||(s.pos||[]).length)?"拿着单子":T("空仓","空仓等机会");return`<span class="badge ${k}">${txt}</span>`}
-function render(){const d=D,sy=d.systems||[],cap=d.capital??5000;
- set("tot",f(d.total)+"<small>U</small>");
- set("today",`今天 <b class="num ${cls(d.today_pnl)}">${sg(d.today_pnl)} U（${sg(d.today_pct)}%）</b> · 今天成交 <b class="num">${d.trades_today??"—"}</b> 笔 · ${T("已实现","已落袋")} <b class="num ${cls(d.realized)}">${sg(d.realized)}</b> · ${T("浮盈亏","暂时赚亏")} <b class="num ${cls(d.unrealized)}">${sg(d.unrealized)}</b>`);set("ret",`<span class="${cls(d.pnl)}">${ar(d.pnl)}${sg(d.pnl)} U</span><span class="${cls(d.ret_pct)}">${sg(d.ret_pct)}%</span>`);
- $("cap").textContent=f(cap,0);$("per").textContent=d.period||"—";
- const pm=String(d.period||"").match(/(\d{4}-\d\d-\d\d)\D+(\d{4}-\d\d-\d\d)/),st=day(d.started)||(pm&&day(pm[1])),en=pm&&day(pm[2]),nw=d.now?new Date(d.now.replace(" ","T")+"+08:00"):new Date();
- if(st&&en&&ok(tot0=d.days_total)&&ok(d.days_elapsed)){const tot=d.days_total,el=d.days_elapsed,fr=Math.min(1,Math.max(0,(nw-st)/(en-st+864e5)));
-  $("pfl").style.width=(fr*100).toFixed(1)+"%";$("pday").innerHTML=`第 <b class="num">${el}</b> 天 / 共 ${tot} 天`;$("pend").textContent=`还剩 ${Math.max(0,tot-el)} 天 · ${pm[2].slice(5)} 结束`}
- else{$("pday").textContent="第 — 天 / 共 — 天";$("pend").textContent=""}
+const coin=s=>String(s||"").replace(/-USDT(-SWAP)?/g,"");
+const L=s=>s==="long"||s==="多";
+const tz=(ts,o)=>new Date(ts).toLocaleString("zh-CN",Object.assign({timeZone:"Asia/Shanghai",hour12:false},o));
+const hm=ts=>ts?tz(ts,{hour:"2-digit",minute:"2-digit"}):"—";
+const bj=s=>s&&!/[zZ]|[+-]\d\d:?\d\d$/.test(s)?String(s).replace(" ","T")+"+08:00":s;
+// 把术语翻成大白话
+function plain(t){return String(t??"")
+ .replace(/-USDT-SWAP/g,"").replace(/(\d+)H\b/g,"$1小时").replace(/K线/g,"价格蜡烛")
+ .replace(/Keltner\s*(突破|通道)?(\(n\d+\))?(突破)?/g,"通道突破").replace(/EMA\s*(\d+)\/(\d+)\s*均线(交叉)?/g,"均线交叉（$1 与 $2 根）").replace(/EMA\s*交叉/g,"均线交叉")
+ .replace(/(\d+)?ATR\s*移动止损/g,"跟着涨的认亏线").replace(/\+?\s*ATR\s*止损/g,"+ 按波动幅度设认亏线").replace(/ATR/g,"波动幅度")
+ .replace(/(\d+)R\s*平半/g,"赚到风险的 $1 倍先卖一半").replace(/\bR\b/g,"倍风险").replace(/趋势强度\s*ADX/g,"趋势强度").replace(/ADX/g,"趋势强度")
+ .replace(/\bn\d+\b/g,"").replace(/None/g,"—").replace(/\bIOC\b/g,"").replace(/止损/g,"认亏线").replace(/入场信号/g,"该出手的信号").replace(/观望/g,"等待").replace(/收盘/g,"收在")}
+function how(s){const d=String(s.strategy_desc||s.name||"");
+ if(/Keltner|通道/.test(d))return`盯着${coin(s.universe)||"币价"}，价格冲出最近的波动范围就跟进，每 4 小时看一次`;
+ if(/EMA|均线/.test(d))return`盯着${coin(s.universe)||"币价"}，短期均价穿过长期均价就跟进，每 4 小时看一次`;
+ if(/回踩/.test(d))return`每天挑几个最强势的币，冲高后回落站稳再买入`;
+ return plain(d)||"—"}
+function nm(s){return plain(s.name||s.sys).replace(/\s*\d+小时$/,"").replace(/（\d+ 与 \d+ 根）/,"")}
+function render(){const d=D,sy=d.systems||[],P=sy.flatMap(s=>(s.pos||[]).map(p=>({...p,sys:s.sys}))),TR=d.trades||[];
+ // 1
+ const p=d.pnl;
+ $("r1").innerHTML=!ok(p)?"暂时拿不到结果":Math.abs(p)<0.005?`目前没赚没亏${P.length||TR.length?"":"，还没出手"}<small>起步资金 ${f(d.capital,0)} U，现在 ${f(d.total)} U</small>`
+  :`<span class="${cls(p)}">目前${p>0?"赚了 +":"亏了 −"}${u(p)} U（${sg(d.ret_pct)}%）</span><small>起步资金 ${f(d.capital,0)} U，现在 ${f(d.total)} U${ok(d.today_pnl)&&Math.abs(d.today_pnl)>=.005?`；今天${d.today_pnl>0?"赚":"亏"}了 ${u(d.today_pnl)} U`:""}</small>`;
+ // 2
+ const alive=sy.filter(s=>!/淘汰/.test(s.status||"")).length,dead=sy.length-alive,tdy=d.trades_today;
+ let s2;
+ if(P.length){const up=P.reduce((a,x)=>a+(+x.upnl||0),0),g={};P.forEach(x=>{const k=`${coin(x.inst)}（${L(x.side)?"赌涨":"赌跌"}）`;g[k]=(g[k]||0)+1});const ks=Object.keys(g),list=ks.length==1?ks[0]:ks.slice(0,3).map(k=>g[k]>1?`${g[k]} 笔 ${k}`:k).join("、");
+  s2=`正在拿着 ${ks.length==1?P.length+" 笔 ":""}${list}${ks.length>3?" 等":""}，暂时<span class="${cls(up)}">${Math.abs(up)<.005?"不赚不亏":(up>0?"赚 ":"亏 ")+(Math.abs(up)<.005?"":u(up)+"U")}</span>`}
+ else s2=`${alive} 套策略都在等机会，${tdy?`今天已经出手 ${tdy} 次，现在手上没单子`:"今天还没出手"}`;
+ if(dead)s2+=`<br><span class="mu" style="font-size:.7em">另有 ${dead} 套亏到上限，已经停下</span>`;
+ $("r2").innerHTML=s2;
+ // 3
+ if(d.next_eval){const t=new Date(bj(d.next_eval)),m=Math.max(0,(t-Date.now())/6e4|0),left=m>=60?`${(m/60).toFixed(m>=120?0:1).replace(/\.0$/,"")} 小时`:`${m} 分钟`;
+  $("r3").innerHTML=`下次看盘 <em>${hm(t)}</em>（还有 ${left}）`}else $("r3").textContent="下次看盘时间暂时不知道";
+ if(ok(d.days_elapsed)&&ok(d.days_total)){$("pfl").style.width=Math.min(100,d.days_elapsed/d.days_total*100)+"%";$("pday").textContent=`第 ${d.days_elapsed} 天 / 共 ${d.days_total} 天`;
+  const pm=String(d.period||"").match(/(\d{4}-\d\d-\d\d)\D+(\d{4}-\d\d-\d\d)/);$("pend").textContent=pm?`${+pm[2].slice(5,7)} 月 ${+pm[2].slice(8)} 日结束`:""}
  chart();
- // risk
- const lim=ok(d.dd_limit)?d.dd_limit:10,mdd=d.total_mdd,ddn=d.total_dd_now;$("rlim").textContent=ok(d.dd_limit)?f(d.dd_limit,0):"—";
- set("rdd",`<span style="color:${ddc(mdd)}">${f(mdd,1)}%</span>`);$("rddb").innerHTML=ddbar(ddn,mdd,lim);
- const alive=sy.filter(s=>!/淘汰/.test(s.status||"")).length;set("ralive",`${alive}<span class="dim" style="font-size:14px"> / ${sy.length||5}</span>`);$("ralive2").innerHTML=(alive===sy.length?"全部还在跑":`${sy.length-alive} 套已下场`)+` · ${T("风控","安全规则")}拦下 <b class="num">${d.rejects_count??"—"}</b> 次`;
- const P=sy.flatMap(s=>(s.pos||[]).map(p=>({...p,sys:s.sys,name:s.name}))),up=d.unrealized;
- set("rpos",`${P.length}<span class="dim" style="font-size:14px"> 笔</span>`);$("rupnl").innerHTML=`${T("浮盈亏","暂时赚亏")} <b class="num ${cls(up)}">${sg(up)}</b>`;
- // leaderboard
- const S=[...sy].sort((a,b)=>(b.ret_pct??-1e9)-(a.ret_pct??-1e9));
- $("sys").innerHTML=S.map((s,i)=>{const cv=((d.curves||{})[s.sys]||[]).map(x=>x[1]),dead=/淘汰/.test(s.status||""),ps=s.pos||[];
-  return`<div class="card sc ${dead?"dead":""}" style="border-left:3px solid ${C[s.sys]||"#555"}"><div class="nmline">${i==0&&!dead?"🏆":`<span class="dim num">${i+1}</span>`}<b style="color:${C[s.sys]}">${esc(s.sys)}</b><span>${esc(s.name)}</span>${badge(s)}</div>
-  <div class="row2"><div><span class="r num ${cls(s.ret_pct)}">${ar(s.ret_pct)}${sg(s.ret_pct)}%</span><small class="num">${f(s.eq)} U</small></div>${spark(cv)}</div>
-  <div class="row3"><div>${T("回撤","掉了")} <b class="num">${f(s.dd_now,1)}%</b> <span class="dim">/ 最惨 ${f(s.mdd,1)}%</span><div class="mbar">${ddbar(s.dd_now,s.mdd,lim)}</div></div>
-  <div>${T("胜率")}<br><b class="num">${s.n?f(s.win,0)+"%":"还没平过仓"}</b>${s.n&&s.n<5?' <span class="dim">样本少</span>':""}</div><div>${T("平仓","卖掉")}<br><b class="num">${s.n??"—"} 笔</b></div></div>
-  <div class="doing">💬 ${esc(s.doing||"—")}</div>
-  <details><summary>展开看详情 ▾</summary><div class="sub"><div>这套系统干嘛的：${esc(s.strategy_desc||"—")}</div><div>看几小时的K线：${esc(s.timeframe||"—")} · 交易哪些币：${esc(s.universe||"—")}</div>
-  <div>今天：<b class="num ${cls(s.today_pnl)}">${sg(s.today_pnl)} U（${sg(s.today_pct)}%）</b> · 今天亏损额度用了 <b class="num">${f(s.day_loss_used)}</b> / ${f(s.day_loss_limit)} U（${f(d.day_loss_pct,0)}%）</div><div>${T("已实现","已落袋")} <b class="num">${sg(s.realized)}</b> · ${T("浮盈亏","暂时赚亏")} <b class="num">${sg(s.unrealized)}</b> · 最高到过 <b class="num">${f(s.peak_eq)}</b></div><div>${T("盈亏比")} <b class="num">${f(s.payoff_ratio)}</b> · ${T("盈利因子")} <b class="num">${f(s.profit_factor)}</b> · 平均每笔赚/亏 <b class="num">${f(s.avg_win)} / ${f(s.avg_loss)}</b></div><div>最好/最差一笔 <b class="num">${sg(s.best_trade)} / ${sg(s.worst_trade)}</b> · 手续费 <b class="num">${f(s.fees)}</b> · 买涨/买跌 <b class="num">${s.n_long??"—"}/${s.n_short??"—"}</b> 笔</div><div>📜 历史回测参考：${bt(s.backtest)}</div>${s.dead_at?`<div class="dn">下场时间 ${esc(s.dead_at)} · ${esc(s.dead_reason||"—")}</div>`:""}
-  ${ps.length?ps.map(p=>`<div>• ${esc(cn(p.inst))} ${L(p.side)?"买涨":"买跌"} 进场 ${px(p.entry)} → 现价 ${px(p.px)} · 认亏线 ${px(p.sl)} · <b class="${cls(p.upnl)}">${sg(p.upnl)} U</b>${p.lever?` · ${p.lever}倍`:""}</div>`).join(""):"<div>手上没单子</div>"}</div></details></div>`}).join("")||'<div class="empty">—</div>';
- // positions
- $("posn").textContent=P.length?P.length+" 笔":"";
- $("pos").innerHTML=P.length?`<div class="pos">${P.map(p=>`<div class="card pc" style="border-left:3px solid ${C[p.sys]}"><div class="top"><div><b>${esc(cn(p.inst))}</b><span class="side ${L(p.side)?"L":"S"}">${L(p.side)?T("做多"):T("做空")}</span>${p.lever?`<span class="lev ${p.lever>=10?"hi":""}">${p.lever}倍</span>`:""}<div class="dim" style="font-size:12px">${esc(p.sys)} · ${esc(p.name)}</div></div>
-  <div style="text-align:right"><span class="u num ${cls(p.upnl)}">${sg(p.upnl)}</span><div class="mu" style="font-size:12px">${T("浮盈亏","暂时赚亏")} U</div></div></div>
-  <div class="dim" style="font-size:12px;margin-top:8px">${ok(p.upnl_pct)?`<span class="${cls(p.upnl_pct)}">${sg(p.upnl_pct)}%</span> · `:"— · "}${T("R",ok(p.R_now)?"赚了 "+sg(p.R_now,2)+" 倍风险":"— 倍风险")} · 数量 ${f(p.qty,4)} · 价值 ${f(p.notional)} U · 进场 ${p.open_time?hm(p.open_time):"—"}</div><div class="g"><div><label>进场价</label><span class="num">${px(p.entry)}</span></div><div><label>现价</label><span class="num">${px(p.px)}</span></div><div><label>${T("止损","认亏线")}</label><span class="num dn">${px(p.sl)}</span></div></div>${stopBar(p)}</div>`).join("")}</div>`
-  :`<div class="wait"><div class="pulse"><i></i></div><h3>现在全部${T("空仓")}，等${T("信号")}中</h3><p>这不是坏事：条件不够就不动手，等下一根 4 小时 K 线收盘再看</p><p style="margin-top:12px;font-size:12px">📜 历史回测参考（${esc(d.backtest?.period||"—")}）</p><p style="font-size:13px">${bt(d.backtest)}</p><p class="dim" style="font-size:11px">${esc(d.backtest?.note||"")}</p></div>`;
- // feed
- const A=d.activity||[];$("feed").innerHTML=A.length?A.slice(0,more?60:8).map(a=>`<div class="fi"><small class="num">${esc(String(a.time).slice(11,16))}</small><span>${esc(a.text)}</span></div>`).join("")+(A.length>8?`<button class="more" id="mb">${more?"收起 ▴":"查看更多（共 "+A.length+" 条）▾"}</button>`:""):'<div class="empty">还没有动态，程序第一次看盘后会在这里说话</div>';
- if($("mb"))$("mb").onclick=()=>{more=!more;render()};
- // trades
- const TR=d.trades||[];$("trn").textContent=TR.length?TR.length+" 笔":"";
- $("tsum").innerHTML=`<div><label>总笔数</label><span class="num">${TR.length}</span></div><div><label>${T("胜率")}</label><span class="num">${TR.length?f(TR.filter(t=>t.pnl>0).length/TR.length*100,0)+"%":"—"}</span></div><div><label>${T("盈亏比")}</label><span class="num">${f(d.payoff_ratio)}</span></div><div><label>最好/最差</label><span class="num" style="font-size:12.5px"><span class="up">${sg(d.best_trade,1)}</span>/<span class="dn">${sg(d.worst_trade,1)}</span></span></div>`;
- $("tr").innerHTML=TR.length?TR.map(t=>`<div class="card tc"><div><b style="color:${C[t.sys]||"#fff"}">${esc(t.sys)}</b> <b>${esc(cn(t.inst))}</b> <span class="side ${L(t.side)?"L":"S"}">${L(t.side)?"买涨":"买跌"}</span></div><span class="pn num ${cls(t.pnl)}">${sg(t.pnl)} U</span>
-  <span class="mu num">${esc(String(t.time||"").slice(5,16))} · ${px(t.entry)} → ${px(t.exit)}${t.why?" · "+esc(t.why):""}</span>${ok(t.R)?`<span class="rt num ${cls(t.R)}">${T("R",sg(t.R,1)+" 倍")}</span>`:"<span></span>"}</div>`).join(""):'<div class="wait" style="padding:16px"><h3 style="font-size:14px">还没平过仓</h3><p>第一笔卖掉后，这里会显示进场/离场价和赚亏</p></div>';
- // prices
- $("tick").innerHTML=Object.entries(d.prices||{}).map(([s,v])=>{const ch=v.chg_pct;return`<div class="card chip num"><b>${esc(cn(s))}</b>${px(v.last)} <span class="${cls(ch)}">${ar(ch)}${sg(ch)}%</span></div>`}).join("")||'<div class="empty">行情暂时拿不到</div>';
- $("pool").innerHTML=(d.s5_pool||[]).length?`S5 ${T("币池","候选币")}：`+d.s5_pool.map(x=>`<span>${esc(x)}</span>`).join(""):"";
- const open=[...document.querySelectorAll("details.dl")].map(x=>x.open);
- $("daily").innerHTML=(d.daily||[]).map((x,i)=>`<details class="card dl" ${open[i]?"open":""}><summary>${esc(x.date)}</summary><pre>${esc(x.text)}</pre></details>`).join("")||'<div class="empty">还没有日报，每天收盘后生成</div>'}
-function status(){const dot=$("dot"),u=$("upd");if(!D){u.textContent=lastOk?"":"连接中…";return}
- const age=(Date.now()-lastOk)/1000,po=D.price_ok,pAge=typeof po==="number"?Date.now()/1000-po:(po?0:1e9);
- let c="";if(D.price_err&&pAge>30)c="r";else if(age>15||pAge>30)c="y";dot.className="dot "+c;
- const t=String(D.now||"").slice(5,16);const le=D.last_eval?` · 上次看盘 ${hm(D.last_eval).slice(6)}${D.eval_ok===false?" ⚠️":""}`:"";const le2=innerWidth<600?"":le;u.innerHTML=age>15?`上次更新 <b class="num">${age|0}</b> 秒前`:c==="r"?`行情出错 · ${t}`:c==="y"?`价格延迟 · ${t} 北京时间`:`${t} 北京时间${le2}`}
-async function load(){try{const r=await fetch("data.json?t="+Date.now(),{cache:"no-store"});const j=await r.json();if(j&&j.systems){D=j;lastOk=Date.now();render()}}catch(e){}status()}
-setInterval(()=>{status();if(!D||!D.next_eval)return;let s=Math.max(0,(new Date(D.next_eval.replace(" ","T")+"+08:00")-Date.now())/1000|0);$("cd").textContent=String(s/3600|0).padStart(2,"0")+":"+String(s%3600/60|0).padStart(2,"0")+":"+String(s%60).padStart(2,"0")},1000);
-document.addEventListener("click",e=>{const t=e.target.closest(".t");if(t&&G[t.dataset.k]){$("popt").textContent=G[t.dataset.k][0];$("popd").textContent=G[t.dataset.k][1];$("pop").classList.add("on");e.stopPropagation();return}if(!e.target.closest("#pop"))$("pop").classList.remove("on")});
-$("popx").onclick=()=>$("pop").classList.remove("on");
-$("gl").innerHTML=Object.values(G).map(([a,b])=>`<div><b>${a}</b>：${b}</div>`).join("");$("glb").onclick=()=>$("gl").classList.toggle("on");
+ // board
+ const S=[...sy].sort((a,b)=>((b.eq??0)-(a.eq??0)));
+ $("lb").innerHTML=S.map(s=>{const pl=ok(s.eq)?s.eq-1000:null,dd=/淘汰/.test(s.status||""),ps=(s.pos||[]).length;
+  return`<div class="lr"${dd?' style="opacity:.5"':""}><b><span class="sw" style="background:${C[s.sys]||"#888"}"></span>${esc(nm(s))}<span class="tg">${dd?"已停下":ps?"拿着单子":"等机会"}</span></b>
+  <span class="v num ${cls(pl)}">${!ok(pl)?"—":Math.abs(pl)<.005?"没赚没亏":(pl>0?"赚 ":"亏 ")+u(pl)+" U"}</span><p>${esc(how(s))}</p></div>`}).join("")||'<div class="lr"><p>暂时没有策略数据</p></div>';
+ details()}
+function chart(){const tc=(d=>d.total_curve_ts||d.total_curve||[])(D),cap=D.capital??5000,el=$("ch");
+ if(tc.length<2){el.innerHTML='<div class="hint">每小时记一次，第 2 个点出来后开始画曲线</div>';$("cr").textContent="";return}
+ const lab=x=>/T/.test(x)?tz(x,{month:"numeric",day:"numeric",hour:"2-digit",minute:"2-digit"}):x;
+ const W=600,H=170,v=tc.map(x=>x[1]),all=[...v,cap],mn=Math.min(...all),mx=Math.max(...all),r=mx-mn||1,y=q=>10+(H-30)*(1-(q-mn)/r),yb=y(cap);
+ const line=v.map((q,i)=>((i/(v.length-1))*W).toFixed(1)+","+y(q).toFixed(1)).join(" ");
+ el.innerHTML=`<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" height="170"><defs><clipPath id="a"><rect width="${W}" height="${yb}"/></clipPath><clipPath id="b"><rect y="${yb}" width="${W}" height="${H}"/></clipPath></defs>
+ <polygon clip-path="url(#a)" fill="#34d69f" fill-opacity=".14" points="0,${yb} ${line} ${W},${yb}"/><polygon clip-path="url(#b)" fill="#ff6474" fill-opacity=".14" points="0,${yb} ${line} ${W},${yb}"/>
+ <line x1="0" x2="${W}" y1="${yb}" y2="${yb}" stroke="#d8b46a" stroke-opacity=".5" stroke-dasharray="3 5" vector-effect="non-scaling-stroke"/>
+ <polyline clip-path="url(#a)" fill="none" stroke="#34d69f" stroke-width="2.2" vector-effect="non-scaling-stroke" stroke-linejoin="round" points="${line}"/><polyline clip-path="url(#b)" fill="none" stroke="#ff6474" stroke-width="2.2" vector-effect="non-scaling-stroke" stroke-linejoin="round" points="${line}"/>
+ <text x="2" y="${H-3}" fill="#6b7590" font-size="12">${esc(lab(tc[0][0]))}</text><text x="${W-2}" y="${H-3}" fill="#6b7590" font-size="12" text-anchor="end">${esc(lab(tc.at(-1)[0]))}</text></svg>`;
+ $("cr").innerHTML=`<span style="color:#d8b46a">┄</span> 起步 ${f(cap,0)}`}
+function kv(rows){return`<div class="kv">${rows.map(([a,b])=>`<span>${a}</span><span class="num">${b}</span>`).join("")}</div>`}
+function details(){const d=D,el=$("dt"),open=el.closest("details").open;if(!open&&el.dataset.done)return;el.dataset.done=1;
+ const sy=d.systems||[],bt=d.backtest;
+ let h=`<h3>风险</h3>`+kv([["从最高点掉下来多少（现在）",f(d.total_dd_now,1)+"%"],["最惨的时候掉了多少",f(d.total_mdd,1)+"%"],["单套亏到多少就停下",f(d.dd_limit,0)+"%"],["单套一天最多亏",f(d.day_loss_pct,0)+"%"],["安全规则拦下的下单",(d.rejects_count??"—")+" 次"]]);
+ h+=`<h3>赚钱效率</h3>`+kv([["已经落袋的赚亏",sg(d.realized)+" U"],["还没卖、暂时的赚亏",sg(d.unrealized)+" U"],["十次赢几次（胜率）",(d.trades||[]).length?f((d.trades.filter(t=>t.pnl>0).length/d.trades.length)*100,0)+"%":"还没卖过"],["赢一次赚的 ÷ 输一次亏的",f(d.payoff_ratio)],["总赚 ÷ 总亏",f(d.profit_factor)],["最好一笔 / 最差一笔",sg(d.best_trade)+" / "+sg(d.worst_trade)],["交易所收的手续费",f(d.fees)+" U"]]);
+ if(bt)h+=`<h3>历史测试参考（用过去行情模拟的成绩）</h3>`+kv([["模拟赚了",sg(bt.ret_pct)+"%"],["模拟时最惨掉了",f(bt.mdd,1)+"%"],["模拟时十次赢几次",f(bt.win,0)+"%"],["模拟交易笔数",(bt.trades??"—")+" 笔"]])+`<div class="note">${esc(plain(bt.period||""))}　${esc(plain(bt.note||"").replace(/S\d/g,m=>m))}</div>`;
+ h+=`<h3>每套策略此刻的想法</h3><div class="feed">${sy.map(s=>`<div><small>${esc(nm(s))}</small>${esc(plain(s.doing||"—"))}</div>`).join("")}</div>`;
+ const P=sy.flatMap(s=>(s.pos||[]).map(p=>({...p,n:nm(s)})));
+ if(P.length)h+=`<h3>手上的单子</h3>`+P.map(p=>`<div class="tr1">${esc(coin(p.inst))}（${L(p.side)?"赌涨":"赌跌"}）· ${esc(p.n)}<br><span class="mu">买入价 ${f(p.entry,4).replace(/\.?0+$/,"")} → 现在 ${f(p.px,4).replace(/\.?0+$/,"")}，认亏线 ${f(p.sl,4).replace(/\.?0+$/,"")}，暂时 <b class="${cls(p.upnl)}">${sg(p.upnl)} U</b></span></div>`).join("");
+ const TR=d.trades||[];h+=`<h3>已经卖掉的单子</h3>`+(TR.length?TR.slice(0,30).map(t=>`<div class="tr1">${esc((t.time||"").slice(5,16))} · ${esc(coin(t.inst))}（${L(t.side)?"赌涨":"赌跌"}）<b class="${cls(t.pnl)}" style="float:right">${sg(t.pnl)} U</b><br><span class="mu">买 ${t.entry} → 卖 ${t.exit}${t.why?" · "+esc(plain(t.why)):""}</span></div>`).join(""):'<div class="note">还没卖过，第一笔卖掉后会出现在这里</div>');
+ const pr=Object.entries(d.prices||{});if(pr.length)h+=`<h3>币价（今天涨跌）</h3><div class="tk">${pr.map(([k,v])=>`<div>${esc(coin(k))} <span class="num">${v.last}</span> <span class="${cls(v.chg_pct)}">${sg(v.chg_pct)}%</span></div>`).join("")}</div>`;
+ const A=d.activity||[];if(A.length)h+=`<h3>最近动态</h3><div class="feed">${A.slice(0,10).map(a=>`<div><small>${esc(String(a.time).slice(11,16))}</small>${esc(plain(a.text))}</div>`).join("")}</div>`;
+ const dl=d.daily||[];if(dl.length)h+=`<h3>每日小结</h3>`+dl.slice(0,3).map(x=>`<details><summary class="mu" style="cursor:pointer;padding:6px 0">${esc(x.date)}</summary><div class="daily">${md(plain(x.text))}</div></details>`).join("");
+ el.innerHTML=h}
+function md(t){const out=[];let tb=null;for(const l of t.split("\n")){if(/^\s*\|/.test(l)){if(/^\s*\|[-\s|:]+\|\s*$/.test(l))continue;const c=l.trim().replace(/^\||\|$/g,"").split("|").map(x=>esc(x.trim()));(tb=tb||[]).push(c)}else{if(tb){out.push("<table>"+tb.map((r,i)=>"<tr>"+r.map(c=>i?`<td>${c}</td>`:`<th>${c}</th>`).join("")+"</tr>").join("")+"</table>");tb=null}const s=l.replace(/^#+\s*/,"").replace(/\*\*/g,"").trim();if(s)out.push(`<p>${esc(s)}</p>`)}}if(tb)out.push("<table>"+tb.map(r=>"<tr>"+r.map(c=>`<td>${c}</td>`).join("")+"</tr>").join("")+"</table>");return out.join("")}
+document.querySelector("details.more").addEventListener("toggle",()=>{if(D){$("dt").dataset.done="";details()}});
+function status(){const dot=$("dot"),up=$("upd");if(!D){up.textContent=lastOk?"":"连接中…";return}
+ const age=(Date.now()-lastOk)/1000,po=D.price_ok,pAge=typeof po==="number"?Date.now()/1000-po:(po?0:1e9),stat=src==="data.json";
+ let c="";if(D.price_err&&pAge>30)c="r";else if(age>900||(!stat&&pAge>60))c="y";dot.className="dot "+c;
+ const t=D.now?hm(bj(D.now)):"—";up.textContent=age>900?`${(age/60)|0} 分钟前更新`:`${t} 更新`}
+async function get(p){const r=await fetch(p,{cache:"no-store"});if(!r.ok)throw 0;const j=await r.json();if(!j||!j.systems)throw 0;return j}
+async function load(){const order=src?[src,src==="api/data"?"data.json":"api/data"]:(location.hostname.endsWith("github.io")?["data.json","api/data"]:["api/data","data.json"]);
+ for(const p of order){try{D=await get(p);src=p;lastOk=Date.now();render();break}catch(e){}}status()}
+setInterval(()=>{status();if(D&&D.next_eval&&$("r3"))render.r3&&0},1000);
+setInterval(()=>{if(D)render()},60000);
 load();setInterval(load,5000);
 </script></body></html>
